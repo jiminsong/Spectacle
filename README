@@ -1,5 +1,5 @@
 *****************************************
-Spectacle: Spectral Learning for Epigenomics
+Spectacle: Spectral learning for Annotating Chromatin Labels and Epigenomics
 Copyright (C) 2013-2014 Jimin Song
 
 This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ Here is some example how we run Spectacle.jar with Chip-seq data from ENCODE.
 
 - Install Java 1.5 or later if not already installed.
 
-- Unzip the file Spectacle.zip.
+- Download Spectacle.zip via "Download Zip" on the right side and unzip the file.
 
 - Download Chip-seq data from ENCODE and put under the folder SAMPLEDATA_HG19.
 http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeBroadHistone/
