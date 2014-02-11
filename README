@@ -50,10 +50,10 @@ hg19_inputfilelist.txt contains the filenames of the binarized data.
 
 - Spectral Learning
 whole genome
-java -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist.txt" -i spectral SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 15 hg19
+java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist.txt" -i spectral SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 15 hg19
 
 one chromosome
-java -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist1.txt" -i spectral_chr18 SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 15 hg19
+java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist1.txt" -i spectral_chr18 SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 15 hg19
 
 
 **References**
