@@ -16,19 +16,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************
 
-Spectacle is written in Java and based on the ChromHMM code. It is tested on Linux and Windows. It extended "LearnModel", one of the top level commands of ChromHMM (http://compbio.mit.edu/ChromHMM) by adding spectral learning algorithm for HMM parameter estimation.
-Except "LearnModel", all other commands are run as described in the ChromHMM manual (http://compbio.mit.edu/ChromHMM/ChromHMM_manual.pdf).
+Spectacle is written in Java and based on the ChromHMM code. It has been tested on Linux and Windows. It extends "LearnModel", one of the top level commands of ChromHMM (http://compbio.mit.edu/ChromHMM) by adding a spectral learning algorithm for Hidden Markov Model parameter estimation.
+Other than "LearnModel", all other commands are run as described in the ChromHMM manual (http://compbio.mit.edu/ChromHMM/ChromHMM_manual.pdf).
 
-E.g., java -jar Spectacle.jar MakeSegmentation model.txt SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19
+E.g. java -jar Spectacle.jar MakeSegmentation model.txt SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19
 
 
 **OPTIONS**
 
-For "LearnModel", if an option "-chromhmm" is shown, Spectacle is run exactly the same as ChromHMM as described in the ChromHMM manual. Otherwise, it is run using spectral learning algorithm with the following options.
+For "LearnModel", if the option "-chromhmm" is shown, Spectacle is run exactly the same as ChromHMM as described in the ChromHMM manual. Otherwise, it is run using the spectral learning algorithm with the following options:
 
--lambda lambdavalue : Lambda for data smoothing is set as lambdavalue. lambdavalue=0.95 is a default.
+-lambda lambdavalue : The Lambda parameter in the data smoothing step is set as lambdavalue. lambdavalue=0.95 is the default.
 
--spectralrandom : The emission matrix is estimated as described in the Appendix C in Hsu et al 2012. Without this option, the emission matrix is estimated using anchor observations as described in the paper.
+-spectralrandom : The emission matrix is estimated as described in Appendix C in Hsu et al 2012. Without this option, the emission matrix is estimated using anchor observations as described in the paper (Song and Chen, 2014)
 
 
 **EXAMPLES**
