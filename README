@@ -59,4 +59,4 @@ java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputf
 **References**
 Ernst J, Kellis M. ChromHMM: automating chromatin state discovery and characterization. Nature Methods, 9:215-216, 2012.
 Hsu D, Kakade SM, Zhang T. A spectral algorithm for learning hidden Markov models. Journal of Computer and System Sciences, 78:1460-1480, 2012.
-Song, J and Chen, K. C. Spectacle: Faster and more accurate chromatin state annotation using spectral learning
+Song, J and Chen, K. C. Spectacle: Faster and more accurate chromatin state annotation using spectral learning, bioRxiv doi: 10.1101/002725, 2014.
