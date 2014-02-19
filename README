@@ -38,12 +38,12 @@ Here is some examples of how to run Spectacle.jar with ChIP-seq data from ENCODE
 
 - Download Spectacle.zip via "Download Zip" on the right side of the web page and unzip the file.
 
-- Download ChIP-seq data from ENCODE and put it in the folder SAMPLEDATA_HG19.
+- Download ChIP-seq data from ENCODE and put it in the folder SAMPLEDATA_HG19. Note that the example files in SAMPLEDATA_HG19 downloaded from the UCSC genome browser are ChIP-seq peaks called by the program, Scripture (Guttman et al.).
 http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeBroadHistone/
 
 hg19_cellmarkfiletable.txt contains the names of the files that were downloaded.
 
-- Binarize Bed files
+- Binarize Bed files. The "-peaks" option directly uses the ChIP-seq peaks produced by the program, Scripture (Guttman et al.)
 java -jar Spectacle.jar BinarizeBed -peaks CHROMSIZES/hg19.txt SAMPLEDATA_HG19 hg19_cellmarkfiletable.txt SAMPLEDATA_HG19
 
 hg19_inputfilelist.txt contains the filenames of the binarized data. 
@@ -58,5 +58,6 @@ java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputf
 
 **References**
 Ernst J, Kellis M. ChromHMM: automating chromatin state discovery and characterization. Nature Methods, 9:215-216, 2012.
+Guttman, M et al. Ab initio reconstruction of cell type-specific transcriptomes in mouse reveals the conserved multi-exonic structure of lincRNAs. Nat Biotech, 28(5):503-10
 Hsu D, Kakade SM, Zhang T. A spectral algorithm for learning hidden Markov models. Journal of Computer and System Sciences, 78:1460-1480, 2012.
 Song, J and Chen, K. C. Spectacle: Faster and more accurate chromatin state annotation using spectral learning, bioRxiv doi: 10.1101/002725, 2014.
