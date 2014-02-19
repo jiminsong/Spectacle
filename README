@@ -32,7 +32,7 @@ For "LearnModel", if the option "-chromhmm" is shown, Spectacle is run exactly t
 
 
 **EXAMPLES**
-Here is some examples of how to run Spectacle.jar with ChIP-seq data from ENCODE.
+Here is an example of how to run Spectacle.jar with ChIP-seq data from ENCODE.
 
 - Install Java 1.5 or later if not already installed.
 
