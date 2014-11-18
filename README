@@ -30,6 +30,12 @@ For "LearnModel", if the option "-chromhmm" is shown, Spectacle is run exactly t
 
 -spectralrandom : The emission matrix is estimated as described in Appendix C in Hsu et al 2012. Without this option, the emission matrix is estimated using anchor observations as described in the paper (Song and Chen, 2014)
 
+-noindep : Do not use assumption that all histone marks are independent.
+
+-p maxprocessors : A model is trained using multiple processors in parallel.
+
+-r nmaxiterations : Number of EM iterations. nmaxiterations=1 is a default, in which parameters are not changed but the likelihood is just computed.
+
 
 **EXAMPLES**
 Here is an example of how to run Spectacle.jar with ChIP-seq data from ENCODE.
@@ -38,26 +44,25 @@ Here is an example of how to run Spectacle.jar with ChIP-seq data from ENCODE.
 
 - Download Spectacle.zip via "Download Zip" on the right side of the web page and unzip the file.
 
-- Download ChIP-seq data from ENCODE and put it in the folder SAMPLEDATA_HG19. Note that the example files in SAMPLEDATA_HG19 downloaded from the UCSC genome browser are ChIP-seq peaks called by the program, Scripture (Guttman et al. 2010).
-http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeBroadHistone/
+- Download ChIP-seq data from ENCODE and put it in the folder SAMPLEDATA_HG19. 
+http://www.broadinstitute.org/~anshul/projects/encode/rawdata/mapped/jan2011/noMultiMapTagAlign/
 
 hg19_cellmarkfiletable.txt contains the names of the files that were downloaded.
 
-- Binarize Bed files. The "-peaks" option directly uses the ChIP-seq peaks produced by the program, Scripture (Guttman et al. 2010)
-java -jar Spectacle.jar BinarizeBed -peaks CHROMSIZES/hg19.txt SAMPLEDATA_HG19 hg19_cellmarkfiletable.txt SAMPLEDATA_HG19
+- Binarize Bed files. 
+java -jar Spectacle.jar BinarizeBed CHROMSIZES/hg19.txt SAMPLEDATA_HG19 hg19_cellmarkfiletable.txt SAMPLEDATA_HG19
 
 hg19_inputfilelist.txt contains the filenames of the binarized data. 
 
 - Spectral Learning
 whole genome
-java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist.txt" -i spectral SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 15 hg19
+java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist.txt" -i spectral -lambda 1 -noindep -p 4 SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 20 hg19
 
 one chromosome
-java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist1.txt" -i spectral_chr18 SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 15 hg19
+java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist1.txt" -i spectral_chr18 -lambda 1 -noindep -p 4 SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 20 hg19
 
 
 **References**
 Ernst J, Kellis M. ChromHMM: automating chromatin state discovery and characterization. Nature Methods, 9:215-216, 2012.
-Guttman, M et al. Ab initio reconstruction of cell type-specific transcriptomes in mouse reveals the conserved multi-exonic structure of lincRNAs. Nat Biotech, 28(5):503-10, 2010.
 Hsu D, Kakade SM, Zhang T. A spectral algorithm for learning hidden Markov models. Journal of Computer and System Sciences, 78:1460-1480, 2012.
 Song, J and Chen, K. C. Spectacle: Faster and more accurate chromatin state annotation using spectral learning, bioRxiv doi: 10.1101/002725, 2014.
