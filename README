@@ -1,5 +1,5 @@
 *****************************************
-Spectacle: Spectral learning for Annotating Chromatin Labels and Epigenomics
+Spectacle: Spectral learning for Annotating Chromatin Labels and Epigenomes
 Copyright (C) 2013-2014 Jimin Song
 
 This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************
 
-Spectacle is written in Java and based on the ChromHMM code. It has been tested on Linux and Windows. It extends "LearnModel", one of the top level commands of ChromHMM (http://compbio.mit.edu/ChromHMM) by adding a spectral learning algorithm for Hidden Markov Model parameter estimation.
-Other than "LearnModel", all other commands are run as described in the ChromHMM manual (http://compbio.mit.edu/ChromHMM/ChromHMM_manual.pdf).
+Spectacle is written in Java and based on the ChromHMM code. It has been tested on Linux and Windows. It extends "LearnModel" and "MakeSegmentation" among the top level commands of ChromHMM (http://compbio.mit.edu/ChromHMM) by adding a spectral learning algorithm for Hidden Markov Model parameter estimation. Other than "LearnModel" and "MakeSegmentation", all other commands are run as described in the ChromHMM manual (http://compbio.mit.edu/ChromHMM/ChromHMM_manual.pdf).
 
 E.g. java -jar Spectacle.jar MakeSegmentation model.txt SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19
 
@@ -28,13 +27,26 @@ For "LearnModel", if the option "-chromhmm" is shown, Spectacle is run exactly t
 
 -lambda lambdavalue : The Lambda parameter in the data smoothing step is set as lambdavalue. lambdavalue=0.95 is the default.
 
--spectralrandom : The emission matrix is estimated as described in Appendix C in Hsu et al 2012. Without this option, the emission matrix is estimated using anchor observations as described in the paper (Song and Chen, 2014)
+-spectralrandom : The emission matrix is estimated as described in Appendix C in Hsu et al 2012. Without this option, the emission matrix is estimated using major observations as described in the paper (Song and Chen, 2014)
 
--noindep : Do not use assumption that all histone marks are independent.
+-comb ("noindep" in previous version) : Do not use assumption that all histone marks are conditionally independent given the chromatin state, and consider observations as combinations of marks. There are no EM iterations by default. If EM iterations are run, observations are not considered as combinations of marks anymore.
 
--p maxprocessors : A model is trained using multiple processors in parallel.
+-p maxprocessors : A model is trained using multiple processors in parallel. 
 
--r nmaxiterations : Number of EM iterations. nmaxiterations=1 is a default, in which parameters are not changed but the likelihood is just computed.
+-r nmaxiterations : Number of EM iterations. nmaxiterations=0 (i.e. no iteration) is the default, in which parameters are not changed but the likelihood is just computed.
+
+-init load_comb : This loads the parameters specified in "modelinitialfile" which is in format of output file of the python code "Spectacle_python." By loading the output file of "Spectacle_python", "comb" is automatically set true.
+
+-computesamplemomentonly : This reads histone mark datasets and computes sample moments for spectral learning. Sample moments are written in a file, which is an input file for the python code "Spectacle_python."
+
+
+**Spectacle_python**
+
+For a large number of chromatin marks, the program makes use of the sparsity of the observed pairs matrix for the SVD computation. The module is implemented in Python using the SciPy library (Python version 2.7.6 and SciPy version 0.13.3) for the SVD computation. The Python module is wrapped with the Spectacle Java code for other tasks- e.g. reading datasets, computing the likelihood, and assigning chromatin states to genomic segments by posterior decoding algorithm etc.
+
+python Spectral_python.py file_directory fileID num_states num_marks (min_occurence_observation)
+
+- min_occurence_observation (optional) : This specifies the minimum number of occurences of the observation in the genome. A default number is 1.
 
 
 **EXAMPLES**
@@ -56,10 +68,25 @@ hg19_inputfilelist.txt contains the filenames of the binarized data.
 
 - Spectral Learning
 whole genome
-java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist.txt" -i spectral -lambda 1 -noindep -p 4 SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 20 hg19
+java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist.txt" -i spectral -lambda 1 -comb -p 4 SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 20 hg19
 
 one chromosome
-java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist1.txt" -i spectral_chr18 -lambda 1 -noindep -p 4 SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 20 hg19
+java -mx1200M -jar Spectacle.jar LearnModel -nobrowser -noenrich -f "hg19_inputfilelist1.txt" -i spectral_chr18 -lambda 1 -comb -p 4 SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 20 hg19
+
+- Spectral Learning with the Python module
+whole genome
+java -mx1200M -jar Spectacle.jar LearnModel -nobed -nobrowser -noenrich -f "hg19_inputfilelist.txt" -i spectral -lambda 1 -p 4 -computesamplemomentonly SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 20 hg19
+
+python Spectacle_python.py OUTPUTSAMPLE_HG19 spectral 20 8
+
+java -jar Spectacle.jar MakeSegmentation -f "hg19_inputfilelist.txt" -i spectral -comb "OUTPUTSAMPLE_HG19/model_comb_20_spectral.txt" SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19
+
+one chromosome
+java -mx1200M -jar Spectacle.jar LearnModel -nobed -nobrowser -noenrich -f "hg19_inputfilelist1.txt" -i spectral_chr18 -lambda 1 -p 4 -computesamplemomentonly SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19 20 hg19
+
+python Spectacle_python.py OUTPUTSAMPLE_HG19 spectral_chr18 20 8
+
+java -jar Spectacle.jar MakeSegmentation -f "hg19_inputfilelist1.txt" -i spectral_chr18_comb -comb "OUTPUTSAMPLE_HG19/model_comb_20_spectral_chr18.txt" SAMPLEDATA_HG19 OUTPUTSAMPLE_HG19
 
 
 **References**
