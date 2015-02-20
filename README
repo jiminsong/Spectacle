@@ -1,5 +1,6 @@
 This software impelements a spectral learning algorithm for hidden Markov models for epigenomic data. Please see our paper for futher details.  
-Song, J and Chen, K. C. <A href="http://genomebiology.com/2015/16/1/33" Spectacle: fast chromatin state annotation using spectral learning. /A> Genome Biology, 16:33, 2015.
+Song, J and Chen, K. C. Spectacle: fast chromatin state annotation using spectral learning. /A> Genome Biology, 16:33, 2015.
+http://genomebiology.com/2015/16/1/33
 
 *****************************************
 Spectacle: Spectral learning for Annotating Chromatin Labels and Epigenomes
