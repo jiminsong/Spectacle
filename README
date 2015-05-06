@@ -1,10 +1,6 @@
-This software implements a spectral learning algorithm for hidden Markov models for epigenomic data. Please see our paper for further details.  
-Song, J and Chen, K. C. Spectacle: fast chromatin state annotation using spectral learning. Genome Biology, 16:33, 2015.
-http://genomebiology.com/2015/16/1/33
-
 *****************************************
 Spectacle: Spectral learning for Annotating Chromatin Labels and Epigenomes
-Copyright (C) 2013-2015 Jimin Song
+Copyright (C) 2013-2014 Jimin Song
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -51,9 +47,9 @@ For "LearnModel", if the option "-chromhmm" is shown, Spectacle is run exactly t
 
 For a large number of chromatin marks, the program makes use of the sparsity of the observed pairs matrix for the SVD computation. The module is implemented in Python using the SciPy library (Python version 2.7.6 and SciPy version 0.13.3) for the SVD computation. The Python module is wrapped with the Spectacle Java code for other tasks- e.g. reading datasets, computing the likelihood, and assigning chromatin states to genomic segments by posterior decoding algorithm etc.
 
-python Spectral_python.py file_directory fileID num_states num_marks (min_occurrence_observation)
+python Spectral_python.py file_directory fileID num_states num_marks (min_occurence_observation)
 
-- min_occurrence_observation (optional) : This specifies the minimum number of occurrences of the observation in the genome. A default number is 1.
+- min_occurence_observation (optional) : This specifies the minimum number of occurences of the observation in the genome. A default number is 1.
 
 
 **EXAMPLES**
@@ -99,4 +95,4 @@ java -jar Spectacle.jar MakeSegmentation -f "hg19_inputfilelist1.txt" -i spectra
 **References**
 Ernst J, Kellis M. ChromHMM: automating chromatin state discovery and characterization. Nature Methods, 9:215-216, 2012.
 Hsu D, Kakade SM, Zhang T. A spectral algorithm for learning hidden Markov models. Journal of Computer and System Sciences, 78:1460-1480, 2012.
-Song, J and Chen, K. C. Spectacle: fast chromatin state annotation using spectral learning. Genome Biology, 16:33, 2015.
+Song, J and Chen, K. C. Spectacle: Faster and more accurate chromatin state annotation using spectral learning, bioRxiv doi: 10.1101/002725, 2014.
